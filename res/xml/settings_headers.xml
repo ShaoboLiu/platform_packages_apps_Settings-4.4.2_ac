@@ -29,12 +29,12 @@
         android:title="@string/gemini_sim_management_title"
         android:icon="@drawable/ic_settings_dualsim" />
 	
-    <!-- SIM management -->
+    <!-- Date & Time -->
     <header
-        android:id="@+id/data_usage_settings"
-        android:fragment="com.android.settings.DataUsageSummary"
-        android:title="@string/data_usage_summary_title"
-        android:icon="@drawable/ic_settings_data_usage" />	
+        android:id="@+id/date_time_settings"
+        android:fragment="com.android.settings.DateTimeSettings"
+        android:icon="@drawable/ic_settings_date_time"
+        android:title="@string/date_and_time_settings_title" />
 	
 	
     <!-- Wifi -->
