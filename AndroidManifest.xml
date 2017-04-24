@@ -1753,24 +1753,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 	    
-        <!-- Add for SIM management begin --
-        <activity android:name="Settings$SimManagementActivity"
-                android:label="@string/gemini_sim_management_title"
-                android:clearTaskOnLaunch="true"
-                android:configChanges="orientation|keyboardHidden|screenSize|mcc|mnc">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.settings.GEMINI_MANAGEMENT" />
-                <action android:name="com.android.settings.SIM_MANAGEMENT_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.VOICE_LAUNCH" />
-            </intent-filter>
-            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
-                android:value="com.mediatek.gemini.SimManagement" />
-            <meta-data android:name="com.android.settings.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/sim_settings" />
-        </activity>
-        -- add for SIM management  end -->    
+
 	    
     </application>
 </manifest>
