@@ -1753,7 +1753,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 	    
-        <!-- Add for SIM management begin-->
+        <!-- Add for SIM management begin --
         <activity android:name="Settings$SimManagementActivity"
                 android:label="@string/gemini_sim_management_title"
                 android:clearTaskOnLaunch="true"
@@ -1770,7 +1770,7 @@
             <meta-data android:name="com.android.settings.TOP_LEVEL_HEADER_ID"
                 android:resource="@id/sim_settings" />
         </activity>
-        <!-- add for SIM management  end -->    
+        -- add for SIM management  end -->    
 	    
     </application>
 </manifest>
