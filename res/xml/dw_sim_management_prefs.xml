@@ -17,7 +17,39 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/dw_sim_management">
     
+    <CheckBoxPreference
+        android:key="toggle_airplane"
+        android:title="@string/airplane_mode"
+        android:persistent="false"
+        android:disableDependentsState="true" />
 
+    <com.android.settings.SmsListPreference
+        android:key="sms_application"
+        android:title="@string/sms_application_title"
+        android:persistent="false" />
+     
+     
+  
+    <PreferenceScreen
+        android:key="cell_broadcast_settings"
+        android:title="@string/cell_broadcast_settings" >
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="com.android.cellbroadcastreceiver"
+            android:targetClass="com.android.cellbroadcastreceiver.CellBroadcastSettings" />
+    </PreferenceScreen>
+
+    <PreferenceScreen
+        android:key="wireless_device_support_info"
+        android:title="@string/wireless_device_support_info" >
+        <intent
+            android:action="android.settings.inetg3" />
+    </PreferenceScreen>   
+     
+     
+     
+     
+     
     <Preference android:key="date"
         android:title="@string/dw_modem_imei"
         android:summary="11223344"
