@@ -95,6 +95,8 @@ import com.android.settings.wifi.p2p.WifiP2pSettings;
 import com.android.settings.ethernet.EthernetEnabler;
 import com.android.settings.ethernet.EthernetSettings;
 
+import com.datawind.phone.SimManagement;
+
 import android.os.SystemProperties;
 
 import java.util.ArrayList;
@@ -364,6 +366,7 @@ public class Settings extends PreferenceActivity
         KeyboardLayoutPickerFragment.class.getName(),
         EthernetSettings.class.getName(),
         HomeSettings.class.getName(),
+        SimManagement.class.getName(),
     };
 
     @Override
@@ -1151,5 +1154,6 @@ public class Settings extends PreferenceActivity
     public static class TrustedCredentialsSettingsActivity extends Settings { /* empty */ }
     public static class PaymentSettingsActivity extends Settings { /* empty */ }
     public static class PrintSettingsActivity extends Settings { /* empty */ }
-    public static class PrintJobSettingsActivity extends Settings { /* empty */ }
+    public static class PrintJobSettingsActivity extends Settings { /* empty */ }    
+    public static class SimManagementActivity extends Settings { /* empty */ }
 }
