@@ -16,7 +16,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- SIM management settings screen title -->
-    <string name="dw_sim_management">SIM management settings</string>
     <string name="dw_sim_management_title">SIM management</string>
 
     <string name="dw_modem_imei">Modem IMEI</string>

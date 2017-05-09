@@ -15,15 +15,15 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/dw_sim_management">
+    android:title="@string/dw_sim_management_title">
     
      
-    <Preference android:key="date"
+    <Preference android:key="dwkey_imei"
         android:title="@string/dw_modem_imei"
         android:summary="11223344"
         />
 
-    <Preference android:key="time"
+    <Preference android:key="dwkey_phone_number"
         android:title="@string/dw_phone_number"
         android:summary="+15145695800"
         />

@@ -64,7 +64,7 @@ public class SimManagement extends SettingsPreferenceFragment
 
     // private static final String KEY_DATE_FORMAT = "date_format";
     
-    private static final String KEY_AUTO_TIME = "dwkey_enable_phone";
+    // private static final String KEY_AUTO_TIME = "dwkey_enable_phone";
 
     // private static final String KEY_AUTO_TIME_ZONE = "auto_zone";
 
@@ -104,7 +104,7 @@ public class SimManagement extends SettingsPreferenceFragment
 
         mDummyDate = Calendar.getInstance();
 
-        mAutoTimePref = (CheckBoxPreference) findPreference(KEY_AUTO_TIME);
+        mAutoTimePref = (CheckBoxPreference) findPreference("dwkey_enable_phone");
         mAutoTimePref.setChecked(autoTimeEnabled);
         // mAutoTimeZonePref = (CheckBoxPreference) findPreference(KEY_AUTO_TIME_ZONE);
         // Override auto-timezone if it's a wifi-only device or if we're still in setup wizard.
@@ -115,12 +115,12 @@ public class SimManagement extends SettingsPreferenceFragment
         }
         // mAutoTimeZonePref.setChecked(autoTimeZoneEnabled);
 
-        mTimePref = findPreference("time");
+        mTimePref = findPreference("dwkey_phone_number");
         mTime24Pref = findPreference("dwkey_enable_mobile_data");
 
         // mTimeZone = findPreference("timezone");
 
-        mDatePref = findPreference("date");
+        mDatePref = findPreference("dwkey_imei");
 
         // mDateFormat = (ListPreference) findPreference(KEY_DATE_FORMAT);
 
@@ -249,7 +249,7 @@ public class SimManagement extends SettingsPreferenceFragment
             Settings.System.putString(getContentResolver(),
                     Settings.System.DATE_FORMAT, format);
             updateTimeAndDateDisplay(getActivity());
-        } else */ if (key.equals(KEY_AUTO_TIME)) {
+        } else */ if (key.equals("dwkey_enable_phone" /*KEY_AUTO_TIME*/)) {
             boolean autoEnabled = preferences.getBoolean(key, true);
             Settings.Global.putInt(getContentResolver(), Settings.Global.AUTO_TIME,
                     autoEnabled ? 1 : 0);
