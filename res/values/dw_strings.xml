@@ -18,7 +18,7 @@
     <!-- SIM management settings screen title -->
     <string name="dw_sim_management_title">SIM management</string>
 
-    <string name="dw_modem_imei">Modem IMEI</string>
+    <string name="dw_modem_imei">IMEI</string>
     <string name="dw_phone_number">Phone Number</string>
 
 

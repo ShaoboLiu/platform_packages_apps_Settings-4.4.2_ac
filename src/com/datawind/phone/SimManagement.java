@@ -55,12 +55,13 @@ public class SimManagement extends SettingsPreferenceFragment
         implements OnSharedPreferenceChangeListener,
                 TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
-    private static final String HOURS_12 = "12";
-    private static final String HOURS_24 = "24";
+    // private static final String HOURS_12 = "12";
+    // private static final String HOURS_24 = "24";
 
     // Used for showing the current date format, which looks like "12/31/2010", "2010/12/13", etc.
     // The date value is dummy (independent of actual date).
-    private Calendar mDummyDate;
+    
+     private Calendar mDummyDate;
 
     // private static final String KEY_DATE_FORMAT = "date_format";
     
@@ -74,17 +75,23 @@ public class SimManagement extends SettingsPreferenceFragment
     // have we been launched from the setup wizard?
     protected static final String EXTRA_IS_FIRST_RUN = "firstRun";
 
-    private CheckBoxPreference mAutoTimePref;
-    private Preference mTimePref;
-    private Preference mTime24Pref;
     
     // private CheckBoxPreference mAutoTimeZonePref;
     
     // private Preference mTimeZone;
 
-    private Preference mDatePref;
 
-    // private ListPreference mDateFormat;
+   // private ListPreference mDateFormat;
+    //
+
+
+ 
+    private Preference              mImeiPref;                  // mDatePref;
+    private Preference              mPhoneNumberPref;           // mTimePref;
+    private CheckBoxPreference      mEnablePhonePref;           // mAutoTimePref;
+    private CheckBoxPreference      mEnableMobileDataPref;      // mTime24Pref;
+
+
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -102,10 +109,18 @@ public class SimManagement extends SettingsPreferenceFragment
         Intent intent = getActivity().getIntent();
         boolean isFirstRun = intent.getBooleanExtra(EXTRA_IS_FIRST_RUN, false);
 
-        mDummyDate = Calendar.getInstance();
+         mDummyDate = Calendar.getInstance();
 
-        mAutoTimePref = (CheckBoxPreference) findPreference("dwkey_enable_phone");
-        mAutoTimePref.setChecked(autoTimeEnabled);
+        mImeiPref             = findPreference("dwkey_imei");
+        mPhoneNumberPref      = findPreference("dwkey_phone_number");
+        mEnablePhonePref      = (CheckBoxPreference)findPreference("dwkey_enable_phone");
+        mEnableMobileDataPref = (CheckBoxPreference)findPreference("dwkey_enable_mobile_data");
+
+
+        mEnablePhonePref.setChecked(autoTimeEnabled);
+
+
+
         // mAutoTimeZonePref = (CheckBoxPreference) findPreference(KEY_AUTO_TIME_ZONE);
         // Override auto-timezone if it's a wifi-only device or if we're still in setup wizard.
         // TODO: Remove the wifiOnly test when auto-timezone is implemented based on wifi-location.
@@ -115,14 +130,14 @@ public class SimManagement extends SettingsPreferenceFragment
         }
         // mAutoTimeZonePref.setChecked(autoTimeZoneEnabled);
 
-        mTimePref = findPreference("dwkey_phone_number");
-        mTime24Pref = findPreference("dwkey_enable_mobile_data");
 
         // mTimeZone = findPreference("timezone");
 
-        mDatePref = findPreference("dwkey_imei");
 
         // mDateFormat = (ListPreference) findPreference(KEY_DATE_FORMAT);
+        //
+
+
 
         if (isFirstRun) {
             // getPreferenceScreen().removePreference(mTime24Pref);
@@ -160,10 +175,9 @@ public class SimManagement extends SettingsPreferenceFragment
         mDateFormat.setValue(currentFormat);
         */
 
-        mTimePref.setEnabled(!autoTimeEnabled);
-        mDatePref.setEnabled(!autoTimeEnabled);
+        mImeiPref.setEnabled(!autoTimeEnabled);
+        mPhoneNumberPref.setEnabled(!autoTimeEnabled);
 
-        // mTimeZone.setEnabled(!autoTimeZoneEnabled);
     }
 
     @Override
@@ -173,7 +187,7 @@ public class SimManagement extends SettingsPreferenceFragment
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
 
-        ((CheckBoxPreference)mTime24Pref).setChecked(is24Hour());
+        // ((CheckBoxPreference)mTime24Pref).setChecked(is24Hour());
 
         // Register for time ticks and other reasons for time change
         IntentFilter filter = new IntentFilter();
@@ -253,8 +267,10 @@ public class SimManagement extends SettingsPreferenceFragment
             boolean autoEnabled = preferences.getBoolean(key, true);
             Settings.Global.putInt(getContentResolver(), Settings.Global.AUTO_TIME,
                     autoEnabled ? 1 : 0);
-            mTimePref.setEnabled(!autoEnabled);
-            mDatePref.setEnabled(!autoEnabled);
+
+            mImeiPref.setEnabled(!autoEnabled);
+            mPhoneNumberPref.setEnabled(!autoEnabled);
+
         } /* else if (key.equals(KEY_AUTO_TIME_ZONE)) {
             boolean autoZoneEnabled = preferences.getBoolean(key, true);
             Settings.Global.putInt(
@@ -328,10 +344,9 @@ public class SimManagement extends SettingsPreferenceFragment
     */
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mDatePref) {
+        if (preference == mImeiPref) {
             showDialog(DIALOG_DATEPICKER);
-        } else if (preference == mTimePref) {
-            // The 24-hour mode may have changed, so recreate the dialog
+        } else if (preference == mPhoneNumberPref) {
             removeDialog(DIALOG_TIMEPICKER);
             showDialog(DIALOG_TIMEPICKER);
         } /* else if (preference == mTime24Pref) {
@@ -363,6 +378,7 @@ public class SimManagement extends SettingsPreferenceFragment
 
     /*  Get & Set values from the system settings  */
 
+    /*
     private boolean is24Hour() {
         return DateFormat.is24HourFormat(getActivity());
     }
@@ -372,6 +388,7 @@ public class SimManagement extends SettingsPreferenceFragment
                 Settings.System.TIME_12_24,
                 is24Hour? HOURS_24 : HOURS_12);
     }
+    */
 
     private String getDateFormat() {
         return Settings.System.getString(getContentResolver(),
@@ -384,6 +401,15 @@ public class SimManagement extends SettingsPreferenceFragment
         } catch (SettingNotFoundException snfe) {
             return false;
         }
+    }
+
+    private boolean getSettingsDataRoaming() {
+        try {
+            return Settings.Global.getInt(getContentResolver(), Settings.Global.DATA_ROAMING) > 0;
+        } catch (SettingNotFoundException snfe) {
+            return false;
+        }
+
     }
 
     /* package */ static void setDate(Context context, int year, int month, int day) {
