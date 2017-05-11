@@ -18,15 +18,19 @@ package com.datawind.phone;
 
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.CheckBoxPreference;
@@ -44,6 +48,8 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 
+import com.android.phone;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -60,6 +66,8 @@ public class SimManagement extends SettingsPreferenceFragment
 
     private static final int DIALOG_DATEPICKER = 0;
     private static final int DIALOG_TIMEPICKER = 1;
+
+    private Phone                   mPhone;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -104,6 +112,9 @@ public class SimManagement extends SettingsPreferenceFragment
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
         updateDisplayUI(getActivity());
+
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        mEnableMobileDataPref.setChecked(cm.getMobileDataEnabled());
     }
 
     @Override
@@ -114,7 +125,7 @@ public class SimManagement extends SettingsPreferenceFragment
     }
 
     public void updateDisplayUI(Context context) {
-        mEmeiPref.setSummary("abc");
+        mImeiPref.setSummary("abc");
         mPhoneNumberPref.setSummary("123");
         mEnablePhonePref.setChecked(true);
         mEnableMobileDataPref.setChecked(false);
@@ -200,10 +211,14 @@ public class SimManagement extends SettingsPreferenceFragment
             showDialog(DIALOG_TIMEPICKER);
         }
         
-        else if (preference == mEnablePhonePref) {        
+        else if (preference == mEnablePhonePref) {
+            if (mEnablePhonePref.isChecked()) {
+            }
         }
         
         else if (preference == mEnableMobileDataPref) {
+            ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+            cm.setMobileDataEnabled(mEnableMobileDataPref.isChecked());
         }
         
         return super.onPreferenceTreeClick(preferenceScreen, preference);
